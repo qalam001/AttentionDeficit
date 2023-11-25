@@ -505,8 +505,8 @@ class AttDefSingleView:
     def save_annotated_imgs(self, epoch, coco_evaluator, targets, before, after, attack_dir, samples_id):
         attack_dir_imgs = attack_dir / Path('imgs/annotations/')
         attack_dir_imgs.mkdir(parents=True, exist_ok=True)
-        before_dir = attack_dir_imgs / Path('before')
-        after_dir = attack_dir_imgs / Path('after')
+        before_dir = attack_dir / Path('before')
+        after_dir = attack_dir / Path('after')
         gt_dir = attack_dir_imgs / Path('gt')
         dt_dir = attack_dir_imgs / Path('dt')
         before_dir.mkdir(parents=True, exist_ok=True)
