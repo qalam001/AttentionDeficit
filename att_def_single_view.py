@@ -490,7 +490,7 @@ class AttDefSingleView:
         return outputs, atts_en, ptrs_en, atts_de, ptrs_de
 
     @staticmethod
-    def save_model_parameters(ptrs_en, ptrs_de, atts_en, atts_de, attack_dir, epoch, samples_id):
+    def save_model_parameters(epoch, ptrs_en, ptrs_de, atts_en, atts_de, attack_dir, samples_id):
         attack_dir_it_ep = attack_dir / Path(f'parameters/{epoch}/{samples_id}')
         attack_dir_it_ep.mkdir(parents=True, exist_ok=True)
         ptrs_en_dir = attack_dir_it_ep / Path('ptrs_en.pth')
@@ -502,7 +502,7 @@ class AttDefSingleView:
         torch.save(atts_en, atts_en_dir)
         torch.save(atts_de, atts_de_dir)
 
-    def save_annotated_imgs(self, coco_evaluator, targets, before, after, attack_dir, samples_id):
+    def save_annotated_imgs(self, epoch, coco_evaluator, targets, before, after, attack_dir, samples_id):
         attack_dir_imgs = attack_dir / Path('imgs/annotations/')
         attack_dir_imgs.mkdir(parents=True, exist_ok=True)
         before_dir = attack_dir_imgs / Path('before')
@@ -552,8 +552,9 @@ class AttDefSingleView:
                 y0, y1 = y0 * y_scale, y1 * y_scale
                 draw_dt.rectangle((x0, y0, x1, y1), outline=color, width=5)
 
-        bef.save(before_dir / Path(f'{samples_id}.png'))
-        aft.save(after_dir / Path(f'{samples_id}.png'))
+        if epoch == 0:
+            bef.save(before_dir / Path(f'{samples_id}.png'))
+            aft.save(after_dir / Path(f'{samples_id}.png'))
         img_gt.save(gt_dir / Path(f'{samples_id}.png'))
         img_dt.save(dt_dir / Path(f'{samples_id}.png'))
 
@@ -598,9 +599,9 @@ class AttDefSingleView:
                 outputs, atts_en, ptrs_en, atts_de, ptrs_de = self.model(samples)
 
                 # visualize
-                if True or visualize:
+                if visualize:
                     ep = epoch if epoch in (0, 1) else 2
-                    self.save_model_parameters(ptrs_en, ptrs_de, atts_en, atts_de, attack_dir, samples_id, ep)
+                    self.save_model_parameters(ep, ptrs_en, ptrs_de, atts_en, atts_de, attack_dir, samples_id)
 
                 # update coco evaluator
                 orig_target_sizes = torch.stack([t["orig_size"] for t in targets], dim=0)
@@ -609,8 +610,8 @@ class AttDefSingleView:
                 coco_evaluator.update(res)
 
                 # visualize
-                if True or visualize:
-                    self.save_annotated_imgs(coco_evaluator, targets, before, after, attack_dir, samples_id)
+                if visualize:
+                    self.save_annotated_imgs(epoch, coco_evaluator, targets, before, after, attack_dir, samples_id)
 
                 # update progress_bar
                 progress_bar.update(1)
@@ -741,6 +742,8 @@ class AttDefSingleView:
             patches_info = AttDefSingleView.get_uniform_grid_pnts(x_rng, y_rng, n, sz)
         elif sampler == 'uniforml':
             patches_info = AttDefSingleView.get_uniform_linear_pnts(x_rng, y_rng, n, sz)
+        elif sampler == 'custom':
+            patches_info = [(100, 100)]
         else:
             raise ValueError('Sampler function not valid')
         patches_info = [(x, y, sz) for x, y in patches_info]

@@ -15,10 +15,6 @@ from AttDefMVDeTr.multiview_detector.evaluation.evaluate import evaluate
 from AttDefMVDeTr.multiview_detector.utils.decode import ctdet_decode, mvdet_decode
 from AttDefMVDeTr.multiview_detector.utils.nms import nms
 from AttDefMVDeTr.multiview_detector.utils.image_utils import add_heatmap_to_image, img_color_denormalize
-import torchvision.transforms as T
-import cv2
-
-
 
 
 class BaseTrainer(object):
@@ -103,6 +99,18 @@ class PerspectiveTrainer(BaseTrainer):
                 pass
         return losses / len(dataloader)
 
+    def visualize_img(self, epoch, batch_idx, before, after):
+        if epoch == 0:
+            for cam in range(7):
+                before_dir = self.logdir / Path(f'before/{batch_idx}')
+                after_dir = self.logdir / Path(f'after/{batch_idx}')
+                before_dir.mkdir(parents=True, exist_ok=True)
+                after_dir.mkdir(parents=True, exist_ok=True)
+                bef = to_pil_image(self.denormalize(before[:, cam, ...]).squeeze(0))
+                aft = to_pil_image(self.denormalize(after[:, cam, ...]).squeeze(0))
+                bef.save(before_dir / Path(f'cam_{cam}.png'))
+                aft.save(after_dir / Path(f'cam_{cam}.png'))
+
     def visualize_world_hmap(self, batch_idx, world_gt, world_dt):
         gt_dir = self.logdir / Path(f'world_hmap/gt')
         dt_dir = self.logdir / Path(f'world_hmap/dt')
@@ -159,16 +167,7 @@ class PerspectiveTrainer(BaseTrainer):
             losses += loss.item()
 
             if visualize:
-                if epoch == 0:
-                    for cam in range(7):
-                        before_dir = self.logdir / Path(f'before/{batch_idx}')
-                        after_dir = self.logdir / Path(f'after/{batch_idx}')
-                        before_dir.mkdir(parents=True, exist_ok=True)
-                        after_dir.mkdir(parents=True, exist_ok=True)
-                        bef = to_pil_image(self.denormalize(before[:, cam, ...]).squeeze(0))
-                        aft = to_pil_image(self.denormalize(after[:, cam, ...]).squeeze(0))
-                        bef.save(before_dir / Path(f'cam_{cam}.png'))
-                        aft.save(after_dir / Path(f'cam_{cam}.png'))
+                self.visualize_img(epoch, batch_idx, before, after)
                 self.visualize_world_hmap(batch_idx, world_gt, world_heatmap)
                 self.visualize_imgs_heatmap(batch_idx, data, imgs_heatmap)
 

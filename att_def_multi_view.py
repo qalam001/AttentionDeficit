@@ -672,6 +672,8 @@ class AttDefMultiView:
                 pnts = AttDefMultiView.get_uniform_grid_pnts(x_rng, y_rng, n[i], sz)
             elif sampler == 'uniforml':
                 pnts = AttDefMultiView.get_uniform_linear_pnts(x_rng, y_rng, n[i], sz)
+            elif sampler == 'custom':
+                pnts = [(100, 100)]
             else:
                 raise ValueError('Sampler method not valid')
             pnts = [(x, y, sz) for x, y in pnts]
