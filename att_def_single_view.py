@@ -448,6 +448,7 @@ class AttDefSingleView:
         Returns:
             - True/False
         """
+        return False
         if aps[-1] == 0:
             return True
         if len(aps) < 10:

@@ -523,6 +523,7 @@ class AttDefMultiView:
         Returns:
             - True/False
         """
+        return False
         if modas[-1] == 0:
             return True
         if modas[-1] == 0:
