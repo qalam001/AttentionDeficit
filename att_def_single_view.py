@@ -626,7 +626,7 @@ class AttDefSingleView:
         coco_evaluator.summarize()
 
         # write in file
-        stats_dir = self.output_dir / Path(f'{attack_fn}.txt')
+        stats_dir = self.output_dir / Path(f'{attack_fn}/stats.txt')
         stats = coco_evaluator.coco_eval['bbox'].stats
         with open(stats_dir, 'a') as file:
             np.savetxt(file, stats, fmt='%.3f', newline=' ')
