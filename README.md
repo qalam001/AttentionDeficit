@@ -12,7 +12,7 @@ Apart from the code, we have also included the slightly modified (for parameter 
 # Creating Virtual Environment
 We encourage the reviewers to create a separate virtual environment for package installation using the following instructions:
 
-```markdown
 ```bash
 conda create -n AttentionDeficit python=3.7
 conda activate AttentionDeficit
+```
