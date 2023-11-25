@@ -452,14 +452,14 @@ class AttDefMultiView:
             - downsample: scaling factor used on the original image (1920x1080 -> 1280x720)
             - batch_size: batch_size for training and testing
         """
-        base = Wildtrack(os.path.expanduser(f'~/{dataset}'))
+        base = Wildtrack(os.path.expanduser(f'data/{dataset}'))
 
         self.num_cams = 7
         self.H, self.W = base.img_shape
         # optionally, images are downsampled from 1920x1080 to 1280x720 for memory constraints
         self.H, self.W = int(self.H / downsample), int(self.W / downsample)
 
-        self.train_set = frameDataset(base, train_ratio=0.025)
+        self.train_set = frameDataset(base)
         self.test_set = frameDataset(base, train=False)
 
         self.train_loader = DataLoader(self.train_set, batch_size=batch_size, shuffle=True)
