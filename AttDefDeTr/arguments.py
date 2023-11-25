@@ -80,7 +80,7 @@ def build_args():
 
     parser.add_argument('--img_size', default=768, type=int)
 
-    parser.add_argument('--output', default='output', type=str)
+    parser.add_argument('--output', default='out', type=str)
     parser.add_argument('--src_num', default=1, type=int)
     parser.add_argument('--src_size', default=32, type=int)
     parser.add_argument('--tar_num', default=1, type=int)
