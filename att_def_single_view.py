@@ -1326,7 +1326,7 @@ elif args.attack == 'OP':
 elif args.attack == 'CP':
     att_def_single_view.CPAttack('CP', args.epoch, args.num_batches_train, args.num_batches_val, args.visualize)
 elif args.attack == 'SP':
-    att_def_single_view.CPAttack('SP', args.epoch, args.num_batches_train, args.num_batches_val, args.visualize)
+    att_def_single_view.SPAttack('SP', args.epoch, args.num_batches_train, args.num_batches_val, args.visualize)
 elif args.attack == 'Att':
     att_def_single_view.AttAttack('Att', args.epoch, args.num_batches_train, args.num_batches_val, args.visualize)
 elif args.attack == 'Clean':
