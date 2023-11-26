@@ -57,21 +57,21 @@ The dataset should be placed into the `data\dataset` folder, where `dataset` is 
 ```markdown
 data
 |___coco
-|___annotations
-|___train2017
-|___val2017
+    |___annotations
+    |___train2017
+    |___val2017
 ```
 And, the following directory structure is recommended for Wildtrack:
 ```markdown
 data
 |___wildtrack
-|___annotations_positions
-|___calibrations
-|___image_subsets
-|___gt.txt
-|___README.txt
-|___rectangles.pom
-|___WILDTRACK.pdf
+    |___annotations_positions
+    |___calibrations
+    |___image_subsets
+    |___gt.txt
+    |___README.txt
+    |___rectangles.pom
+    |___WILDTRACK.pdf
 ```
 
 ### Placing models into correct folders
@@ -83,13 +83,13 @@ structure is recommended for Deformable DeTr:
 ```markdown
 model
 |___coco
-|___detr_6
+    |___detr_6
 ```
 And, the following directory structure is recommended for MVDeTr:
 ```markdown
 model
 |___wildtrack
-|___mvdetr_3
+    |___mvdetr_3
 ```
 
 ## Single-view Attention Deficit
