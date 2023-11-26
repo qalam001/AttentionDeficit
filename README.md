@@ -4,7 +4,7 @@ Transformers with Collaborative Adversarial Patches'.
 
 ## Declaration
 The code is provided as part of the supplementary material. Upon acceptance of the paper, the code will be made public 
-in the anonymous Github repository mentioned in the introduction. 
+in the anonymous Github repository mentioned in the Introduction. 
 
 ## Content Overview
 Apart from the code, we have also included the slightly modified (for parameter extraction) Deformable DeTr and MVDetr 
