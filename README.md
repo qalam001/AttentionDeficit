@@ -1,4 +1,4 @@
-## Attention Deficit is Ordered!
+## Adversarial Attention Deficit
 This codebase is the official implementation of the paper 'Attention Deficit is Ordered: Fooling Deformable Vision 
 Transformers with Collaborative Adversarial Patches'. 
 
